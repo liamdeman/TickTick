@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.OData.NewtonsoftJson;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OData.Edm;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 using TickTick.Api;
 using TickTick.Data;
 
@@ -19,11 +19,19 @@ internal class Program
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
         });
 
-        
-        builder.Services.AddControllers(opt => { opt.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>(); })
+
+        builder.Services
+            .AddControllers()
+            .AddODataNewtonsoftJson()
+            .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            })
             .AddOData(options =>
-                options.AddRouteComponents(new EdmModel()).Select().OrderBy().Filter().Expand()
-                    .SetMaxTop(null).Count());
+            {
+                options.EnableQueryFeatures();
+            });
+
         builder.Services.AddSwaggerGen(config =>
         {
             config.SwaggerDoc(
@@ -48,7 +56,7 @@ internal class Program
         
 
         builder.Services.RegisterServices();
-
+        
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
