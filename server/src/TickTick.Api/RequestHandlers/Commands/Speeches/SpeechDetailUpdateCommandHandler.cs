@@ -31,8 +31,7 @@ public class SpeechDetailUpdateCommandHandler : IRequestHandler<SpeechDetailUpda
 
         _mapper.Map(request.Speech, speech);
 
-        _speechesRepository.Update(speech);
-        await _speechesRepository.SaveAsync();
+        _speechesRepository.UpdateAsync(speech);
 
         return Unit.Value;
     }

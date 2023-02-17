@@ -26,8 +26,7 @@ public class SongCreateCommandHandler : IRequestHandler<SongCreateCommand, Guid>
     {
         var song = _mapper.Map<Song>(request.Song);
         
-        _repository.Add(song);
-        await _repository.SaveAsync();
+        _repository.AddAsync(song);
 
         return song.Id;
     }

@@ -5,7 +5,7 @@ namespace TickTick.Repositories.Base;
 public interface IRepository<T> where T : BaseEntity
 {
     IQueryable<T> GetAll();
-    void Add(T entity);
-    void Update(T entity);
-    Task<int> SaveAsync();
+    Task<int> AddAsync(T entity);
+    Task<int> UpdateAsync(T entity);
+    Task DeleteAsync(Guid id);
 }

@@ -31,7 +31,7 @@ public class SongDetailUpdateCommandHandler : IRequestHandler<SongDetailUpdateCo
             .SingleAsync(x => x.Id == request.Id, cancellationToken);
         
         _mapper.Map(request.Song, song);
-        await _songsRepository.SaveAsync();
+        await _songsRepository.UpdateAsync(song);
 
         return Unit.Value;
     }

@@ -31,8 +31,7 @@ public class PlaylistDetailUpdateCommandHandler : IRequestHandler<PlaylistDetail
         
         _mapper.Map(request.Playlist, playlist);
         
-        _repository.Update(playlist);
-        await _repository.SaveAsync();
+        _repository.UpdateAsync(playlist);
         return Unit.Value;
     }
 }

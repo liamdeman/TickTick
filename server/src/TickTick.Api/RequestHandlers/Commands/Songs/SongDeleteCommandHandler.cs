@@ -1,5 +1,4 @@
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using TickTick.Models;
 using TickTick.Repositories.Base;
 
@@ -21,9 +20,7 @@ public class SongDeleteCommandHandler : IRequestHandler<SongDeleteCommand>
 
     public async Task<Unit> Handle(SongDeleteCommand request, CancellationToken cancellationToken)
     {
-        await _songRepository.GetAll()
-            .Where(x => x.Id == request.Id)
-            .ExecuteDeleteAsync(cancellationToken);
+        await _songRepository.DeleteAsync(request.Id);
         
         return Unit.Value;
     }

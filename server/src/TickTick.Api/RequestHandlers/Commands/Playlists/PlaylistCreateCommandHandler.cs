@@ -25,8 +25,7 @@ public class PlaylistCreateCommandHandler : IRequestHandler<PlaylistCreateComman
     public async Task<Guid> Handle(PlaylistCreateCommand request, CancellationToken cancellationToken)
     {
         var playlist = _mapper.Map<Playlist>(request.Playlist);
-        _repository.Add(playlist);
-        await _repository.SaveAsync();
+        _repository.AddAsync(playlist);
         return playlist.Id;
     }
 }

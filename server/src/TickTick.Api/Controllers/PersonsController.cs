@@ -54,7 +54,7 @@ public class PersonsController : ApiControllerBase
     {
         await _mediator.Send(new PersonDeleteCommand
         {
-            PublicId = id
+            Id = id
         });
         return NoContent();
     }

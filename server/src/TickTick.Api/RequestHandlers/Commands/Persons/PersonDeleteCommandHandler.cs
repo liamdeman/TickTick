@@ -1,5 +1,4 @@
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using TickTick.Models;
 using TickTick.Repositories.Base;
 
@@ -7,7 +6,7 @@ namespace TickTick.Api.RequestHandlers.Commands.Persons;
 
 public record PersonDeleteCommand : IRequest
 {
-    public required Guid PublicId { get; set; }
+    public required Guid Id { get; set; }
 }
 
 public class PersonDeleteCommandHandler : IRequestHandler<PersonDeleteCommand>
@@ -21,9 +20,7 @@ public class PersonDeleteCommandHandler : IRequestHandler<PersonDeleteCommand>
 
     public async Task<Unit> Handle(PersonDeleteCommand request, CancellationToken cancellationToken)
     {
-        await _repository.GetAll()
-            .Where(x => x.Id == request.PublicId)
-            .ExecuteDeleteAsync(cancellationToken);
+        await _repository.DeleteAsync(request.Id);
         return Unit.Value;
     }
 }

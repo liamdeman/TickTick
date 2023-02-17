@@ -15,29 +15,27 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         _dbContext = dbContext;
         _dbSet = _dbContext.Set<T>();
     }
-
-    public void Add(T entity)
-    {
-        _dbContext.Add(entity);
-    }
-
-    public void Delete(T entity)
-    {
-        _dbContext.Remove(entity);
-    }
-
+    
     public IQueryable<T> GetAll()
     {
         return _dbSet;
     }
 
-    public Task<int> SaveAsync()
+    public async Task<int> AddAsync(T entity)
     {
-        return _dbContext.SaveChangesAsync();
+        _dbContext.Add(entity);
+        return await _dbContext.SaveChangesAsync();
     }
 
-    public void Update(T entity)
+    public async Task DeleteAsync(Guid id)
+    {
+        await _dbSet.Where(x => x.Id == id)
+            .ExecuteDeleteAsync();
+    }
+    
+    public async Task<int> UpdateAsync(T entity)
     {
         _dbContext.Update(entity);
+        return await _dbContext.SaveChangesAsync();
     }
 }

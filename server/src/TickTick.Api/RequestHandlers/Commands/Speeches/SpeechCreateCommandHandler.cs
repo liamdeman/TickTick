@@ -26,8 +26,7 @@ public class SpeechCreateCommandHandler : IRequestHandler<SpeechCreateCommand, G
     {
         var speech = _mapper.Map<Speech>(request.Speech);
         
-        _speechesRepository.Add(speech);
-        await _speechesRepository.SaveAsync();
+        _speechesRepository.AddAsync(speech);
 
         return speech.Id;
     }

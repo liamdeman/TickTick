@@ -31,8 +31,7 @@ public class PersonDetailUpdateCommandHandler : IRequestHandler<PersonDetailUpda
 
         _mapper.Map(request.Person, person);
         
-        _repository.Update(person);
-        await _repository.SaveAsync();
+        _repository.UpdateAsync(person);
         return Unit.Value;
     }
 }

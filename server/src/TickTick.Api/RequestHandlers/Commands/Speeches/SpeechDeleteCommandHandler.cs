@@ -1,5 +1,4 @@
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using TickTick.Models;
 using TickTick.Repositories.Base;
 
@@ -21,10 +20,8 @@ public class SpeechDeleteCommandHandler : IRequestHandler<SpeechDeleteCommand>
 
     public async Task<Unit> Handle(SpeechDeleteCommand request, CancellationToken cancellationToken)
     {
-        await _speechesRepository.GetAll()
-            .Where(x => x.Id == request.Id)
-            .ExecuteDeleteAsync(cancellationToken);
+        await _speechesRepository.DeleteAsync(request.Id);
 
         return Unit.Value;
     }
-}
+};

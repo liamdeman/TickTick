@@ -26,8 +26,7 @@ public class PersonCreateCommandHandler : IRequestHandler<PersonCreateCommand, G
     public async Task<Guid> Handle(PersonCreateCommand request, CancellationToken cancellationToken)
     {
         var person = _mapper.Map<Person>(request.Person);
-        _repository.Add(person);
-        await _repository.SaveAsync();
+        await _repository.AddAsync(person);
         return person.Id;
     }
 }
