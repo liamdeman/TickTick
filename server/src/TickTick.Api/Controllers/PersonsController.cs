@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TickTick.Api.Dtos.Persons;
 using TickTick.Api.RequestHandlers.Commands.Persons;
@@ -6,6 +7,7 @@ using TickTick.Api.RequestHandlers.Requests.Persons;
 
 namespace TickTick.Api.Controllers;
 
+[Authorize]
 public class PersonsController : ApiControllerBase
 {
     public PersonsController(IMediator mediator) : base(mediator)

@@ -18,9 +18,10 @@ internal class Program
         builder.Services.AddDbContext<TickTickDbContext>(options => {
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
         });
-
-
+        
+        
         builder.Services
+            .ConfigureAuthentication(builder.Configuration)
             .AddControllers()
             .AddODataNewtonsoftJson()
             .AddNewtonsoftJson(options =>

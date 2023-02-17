@@ -7,7 +7,7 @@ namespace TickTick.Api;
 
 public static class IoCExtensions
 {
-    public static void RegisterServices(this IServiceCollection services)
+    public static IServiceCollection RegisterServices(this IServiceCollection services)
     {
         services.AddTransient<IRepository<Person>, Repository<Person>>();
         services.AddTransient<IRepository<Playlist>, Repository<Playlist>>();
@@ -15,5 +15,7 @@ public static class IoCExtensions
         services.AddTransient<IRepository<Speech>, Repository<Speech>>();
         services.AddMediatR(typeof(IoCExtensions));
         services.AddAutoMapper(typeof(IoCExtensions));
+
+        return services;
     }
 }
