@@ -32,7 +32,19 @@ internal class Program
             {
                 options.EnableQueryFeatures();
             });
-
+        
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("Default",
+                policy =>
+                {
+                    policy.AllowAnyOrigin() // note the port is included 
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+        });
+        
+        
         builder.Services.AddSwaggerGen(config =>
         {
             config.SwaggerDoc(
@@ -59,6 +71,8 @@ internal class Program
         builder.Services.RegisterServices();
         
         var app = builder.Build();
+
+        app.UseCors("Default");
 
         // Configure the HTTP request pipeline.
 
