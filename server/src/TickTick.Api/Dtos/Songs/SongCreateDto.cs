@@ -6,5 +6,4 @@ public record SongCreateDto
     public string Artist { get; set; }
     public Guid PlaylistId { get; set; }
     public TimeSpan? Duration { get; set; }
-    public uint SequenceNumber { get; set; }
 }
