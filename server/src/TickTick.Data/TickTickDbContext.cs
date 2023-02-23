@@ -9,6 +9,7 @@ public class TickTickDbContext : DbContext
     public DbSet<Playlist> Playlists { get; set; }
     public DbSet<Song> Songs { get; set; }
     public DbSet<Speech> Speeches { get; set; }
+    public DbSet<PlaylistItem> PlaylistItems { get; set; }
 
     public TickTickDbContext(DbContextOptions options) : base(options)
     {
@@ -31,6 +32,9 @@ public class TickTickDbContext : DbContext
             .WithOne(x => x.Person)
             .HasForeignKey(x => x.PersonId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<PlaylistItem>()
+            .ToTable("PlaylistItem");
 
         modelBuilder.Entity<Person>()
             .ToTable(nameof(Persons), x => x.IsTemporal());

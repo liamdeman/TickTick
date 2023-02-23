@@ -13,11 +13,13 @@ public class SpeechesController : ApiControllerBase
     }
 
     [HttpPost]
-    public async Task<Guid> Create(SpeechCreateDto input)
+    public async Task<Guid> Create([FromBody]SpeechCreateDto input, [FromQuery] Guid? previousItemId, [FromQuery] Guid? nextItemId)
     {
         return await _mediator.Send(new SpeechCreateCommand
         {
-            Speech = input
+            Speech = input,
+            PreviousItemId = previousItemId,
+            NextItemId = nextItemId
         });
     }
 

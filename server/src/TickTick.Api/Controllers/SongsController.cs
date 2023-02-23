@@ -13,11 +13,13 @@ public class SongsController : ApiControllerBase
     }
 
     [HttpPost]
-    public async Task<Guid> Create(SongCreateDto input)
+    public async Task<Guid> Create([FromBody] SongCreateDto input, [FromQuery] Guid? previousItemId, [FromQuery] Guid? nextItemId)
     {
         return await _mediator.Send(new SongCreateCommand
         {
-            Song = input
+            Song = input,
+            PreviousItemId = previousItemId,
+            NextItemId = nextItemId
         });
     }
 
